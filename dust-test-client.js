@@ -59,143 +59,23 @@ async function main() {
       // Simple debugging info about available methods
       console.log(`Checking API methods: ${typeof dustAPI.getAgentConfigurations === 'function' ? '✓' : '✗'}`);
       
-      // Get agent configurations
-      console.log('Fetching agent configurations...');
-      const agentResult = await dustAPI.getAgentConfigurations().catch(err => {
-        console.error('\nAPI ERROR:');
-        console.error(`- ${err.message}`);
-        console.error(`- ${err.stack}`);
-        throw err;
-      });
+      // get all Agents !!! HERE THE ERROR OCCURS TypeError: Cannot read properties of undefined (reading 'view')
+      const r = await dustAPI.getAgentConfigurations();
 
-      // Log the raw response
-      console.log('Raw API Response:', JSON.stringify(agentResult, null, 2));
-
-      if (agentResult.isErr()) {
-        throw new Error(`API Error: ${agentResult.error.message}`);
-      }
-      
-      // Handle the agents
-      const agents = agentResult.value.filter(agent => agent.status === 'active');
-      console.log(`✓ Found ${agents.length} active agents`);
-      
-      // Select an agent
-      let agentId = config.agentId;
-      if (!agentId && agents.length > 0) {
-        agentId = agents[0].sId;
-        console.log(`✓ Using first agent: ${agents[0].name}`);
-      } else if (agentId && !agents.some(a => a.sId === agentId)) {
-        console.log(`⚠️ Agent ID '${agentId}' not found. Using first available.`);
-        agentId = agents[0]?.sId;
-      }
-      
-      if (!agentId) {
-        throw new Error('No active agents found');
-      }
-
-      // 2. Create a conversation
-      console.log('\n2. Creating conversation...');
-      
-      const context = {
-        timezone: config.timezone,
-        username: config.username,
-        email: config.email,
-        fullName: config.fullName,
-        profilePictureUrl: null,
-        origin: 'api'
-      };
-      
-      const conversationResult = await dustAPI.createConversation({
-        title: null,
-        visibility: 'unlisted',
-        message: {
-          content: config.prompt,
-          mentions: [{ configurationId: agentId }],
-          context
-        }
-      });
-      
-      if (conversationResult.isErr()) {
-        throw new Error(`Conversation error: ${conversationResult.error.message}`);
-      }
-      
-      const { conversation, message } = conversationResult.value;
-      console.log(`✓ Conversation created: ${conversation.sId}`);
-      
-      // 3. Stream the response
-      console.log('\n3. Streaming response...');
-    
-      // Setup timeout
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 60000);
-      
-      try {
-        const streamResult = await dustApi.streamAgentAnswerEvents({
-          conversation,
-          userMessageId: message.sId,
-          signal: controller.signal
-        });
-      
-        clearTimeout(timeout);
-        
-        if (streamResult.isErr()) {
-          throw new Error(streamResult.error.message);
-        }
-        
-        // Process the stream
-        const { eventStream } = streamResult.value;
-        let answer = "";
-        let chainOfThought = "";
-        
-        console.log('\nAgent is responding:');
-      
-        for await (const event of eventStream) {
-          if (!event) continue;
-          
-          switch (event.type) {
-            case "user_message_error":
-            case "agent_error":
-              console.error(`Error: ${event.error.message}`);
-              return;
-              
-            case "generation_tokens":
-              if (event.classification === "tokens") {
-                process.stdout.write(event.text); // Real-time output
-                answer = (answer + event.text).trim();
-              } else if (event.classification === "chain_of_thought") {
-                chainOfThought += event.text;
-              }
-              break;
-              
-            case "agent_message_success":
-              answer = event.message.content ?? "";
-              break;
-          }
-        }
-      
-        // Show summary
-        console.log('\n\n--- Response Summary ---');
-        console.log(`✓ Answer received (${answer.length} chars)`);
-        
-        if (chainOfThought) {
-          console.log(`✓ Chain of thought captured (${chainOfThought.length} chars)`);
-        }
-        
-      } catch (error) {
-        clearTimeout(timeout);
-        if (error.message.includes("AbortError")) {
-          console.log('❌ Response timed out after 60 seconds');
-        } else {
-          console.error(`❌ Stream error: ${error.message}`);
-        }
+      if (r.isErr()) {
+        throw new Error(`API Error: ${r.error.message}`);
+      } else {
+        const agents = r.value.filter((agent) => agent.status === "active");
       }
     } catch (error) {
-      console.error(`\n❌ API ERROR: ${error.message}`);
+      console.error(`Error getting available agents:`, error);
+      return;
     }
   } catch (error) {
-    console.error(`FATAL ERROR: ${error.message}`);
+    console.error(`Error in main function:`, error);
+    return;
   }
 }
 
 // Run the main function
-main();
+main(); 
