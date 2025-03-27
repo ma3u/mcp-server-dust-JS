@@ -34,11 +34,18 @@ console.log(`SDK Version: ${require('@dust-tt/client/package.json').version}`);
 console.log(`Environment: Node.js ${process.version}, ${process.platform} ${process.arch}`);
 
 // Initialize the Dust API client
-const dustApi = new DustAPI(
-  { url: config.url },
-  { workspaceId: config.workspaceId, apiKey: config.apiKey },
+
+const dustAPI = new DustAPI(
+  {
+    url: config.url,
+  },
+  {
+    workspaceId:config.workspaceId,
+    apiKey: config.apiKey,
+  },
   console
 );
+
 
 /**
  * Main function to run the Dust client test
@@ -50,17 +57,20 @@ async function main() {
     
     try {
       // Simple debugging info about available methods
-      console.log(`Checking API methods: ${typeof dustApi.getAgentConfigurations === 'function' ? '✓' : '✗'}`);
+      console.log(`Checking API methods: ${typeof dustAPI.getAgentConfigurations === 'function' ? '✓' : '✗'}`);
       
       // Get agent configurations
       console.log('Fetching agent configurations...');
-      const agentResult = await dustApi.getAgentConfigurations().catch(err => {
+      const agentResult = await dustAPI.getAgentConfigurations().catch(err => {
         console.error('\nAPI ERROR:');
         console.error(`- ${err.message}`);
         console.error(`- ${err.stack}`);
         throw err;
       });
-      
+
+      // Log the raw response
+      console.log('Raw API Response:', JSON.stringify(agentResult, null, 2));
+
       if (agentResult.isErr()) {
         throw new Error(`API Error: ${agentResult.error.message}`);
       }
@@ -95,7 +105,7 @@ async function main() {
         origin: 'api'
       };
       
-      const conversationResult = await dustApi.createConversation({
+      const conversationResult = await dustAPI.createConversation({
         title: null,
         visibility: 'unlisted',
         message: {
@@ -189,4 +199,3 @@ async function main() {
 
 // Run the main function
 main();
-
