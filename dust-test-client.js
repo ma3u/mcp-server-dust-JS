@@ -59,14 +59,26 @@ async function main() {
       // Simple debugging info about available methods
       console.log(`Checking API methods: ${typeof dustAPI.getAgentConfigurations === 'function' ? '✓' : '✗'}`);
       
-      // get all Agents !!! HERE THE ERROR OCCURS TypeError: Cannot read properties of undefined (reading 'view')
-      const r = await dustAPI.getAgentConfigurations();
+      // get all Agents
+      const result = await (async () => {
+        try {
+          const response = await dustAPI.getAgentConfigurations();
+          if (response.isErr()) {
+            return { success: false, error: response.error };
+          }
+          return { success: true, data: response.value };
+        } catch (error) {
+          return { success: false, error };
+        }
+      })();
 
-      if (r.isErr()) {
-        throw new Error(`API Error: ${r.error.message}`);
-      } else {
-        const agents = r.value.filter((agent) => agent.status === "active");
+      if (!result.success) {
+        console.error('Failed to get agent configurations:', result.error);
+        return;
       }
+
+      const agents = result.data.filter(agent => agent.status === 'active');
+      console.log(`✓ Found ${agents.length} active agents`);
     } catch (error) {
       console.error(`Error getting available agents:`, error);
       return;
