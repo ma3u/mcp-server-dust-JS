@@ -159,34 +159,19 @@ async function addDustMessage(conversationId, message) {
   try {
     logger.debug(`Adding message to conversation ${conversationId}:`, message);
     
-    // The Dust API requires content, mentions, and context fields in the message format
-    // Based on the API error response
-    let payload;
+    // Construct the payload with the correct format for Dust API
+    // The context MUST be an object with username and timezone fields according to API validation
+    const payload = { 
+      content: message.content,
+      mentions: [],
+      context: {
+        username: config.username || 'default_user',
+        timezone: config.timezone || 'UTC'
+      }
+    };
     
-    if (message.role === 'user') {
-      payload = { 
-        content: message.content,
-        mentions: [],
-        context: []
-      };
-    } else if (message.role === 'assistant') {
-      // For assistant messages, use the same format
-      payload = { 
-        content: message.content,
-        mentions: [],
-        context: []
-      };
-    } else {
-      // Default to user message format for any other role type
-      logger.warn(`Unknown message role: ${message.role}, defaulting to user format`);
-      payload = { 
-        content: message.content,
-        mentions: [],
-        context: []
-      };
-    }
-    
-    logger.debug('Sending payload to Dust API:', payload);
+    // Log the exact payload we're sending to ensure it's correct
+    logger.debug('Sending payload to Dust API: ' + JSON.stringify(payload));
     
     const response = await dustApi.post(
       `/api/v1/w/${config.workspaceId}/assistant/conversations/${conversationId}/messages`,
@@ -237,11 +222,13 @@ async function createDustRun(messages) {
     
     // Create and start a run to process the message
     try {
+      // Try with the format: /api/v1/w/{workspaceId}/assistant/conversations/{conversationId}/runs
       const runResponse = await dustApi.post(
         `/api/v1/w/${config.workspaceId}/assistant/conversations/${conversationId}/runs`,
         {
-          agentConfiguration: { sId: config.agentId },
-          dataSources: []
+          assistant: config.agentId,
+          stream: false,
+          blocking: true
         }
       );
       
@@ -785,7 +772,7 @@ async function validateDustAPIConnection() {
     
     try {
       // Get agent configurations to check if our agent ID exists
-      const agents = await dustClient.getAgentConfigurations();
+      const agents = await dustClient.getAgentConfigurations({});
       console.log(`Found ${agents.length} agents in the workspace.`);
       
       // Check if our agent ID is in the list

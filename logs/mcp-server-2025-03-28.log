@@ -1,0 +1,562 @@
+[INFO] [2025-03-28T08:20:49.447Z] Starting MCP Server with Dust integration
+[INFO] [2025-03-28T08:20:49.449Z] MCP Server Configuration:
+[INFO] [2025-03-28T08:20:49.449Z] - MCP Name: Dust MCP Server JS
+[INFO] [2025-03-28T08:20:49.449Z] - MCP Host: 127.0.0.1
+[INFO] [2025-03-28T08:20:49.449Z] - MCP Port: 5001
+[INFO] [2025-03-28T08:20:49.449Z] 
+Dust Configuration:
+[INFO] [2025-03-28T08:20:49.449Z] - API Key (masked): ****8abb
+[INFO] [2025-03-28T08:20:49.449Z] - Workspace ID: 11453f1c9e
+[INFO] [2025-03-28T08:20:49.449Z] - Agent ID: 442875
+[INFO] [2025-03-28T08:20:49.450Z] - Agent Name: SystemsThinking
+[INFO] [2025-03-28T08:20:49.450Z] - Base URL: https://dust.tt
+[INFO] [2025-03-28T08:22:01.869Z] Received RPC request: getModels
+[DEBUG] [2025-03-28T08:22:01.869Z] Request params:
+{}
+[INFO] [2025-03-28T08:22:01.873Z] ========== RECEIVED SSE REQUEST ==========
+[DEBUG] [2025-03-28T08:22:01.873Z] Request query:
+{
+  "method": "chat",
+  "params": "{\"messages\":[{\"role\":\"user\",\"content\":\"Hello! Please introduce yourself and explain what you can help me with.\"}],\"model\":\"442875\"}"
+}
+[INFO] [2025-03-28T08:22:01.873Z] Parsed method: chat
+[DEBUG] [2025-03-28T08:22:01.873Z] Parsed params:
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Hello! Please introduce yourself and explain what you can help me with."
+    }
+  ],
+  "model": "442875"
+}
+[INFO] [2025-03-28T08:22:01.873Z] Chat request with 1 messages
+[INFO] [2025-03-28T08:22:01.873Z] Creating new Dust conversation
+[DEBUG] [2025-03-28T08:22:02.913Z] Conversation created
+{
+  "conversation": {
+    "id": 4282320,
+    "owner": {
+      "id": 42808,
+      "sId": "11453f1c9e",
+      "name": "WorkwithAI_Launchpad",
+      "role": "builder",
+      "segmentation": null,
+      "ssoEnforced": false,
+      "whiteListedProviders": [
+        "openai",
+        "anthropic",
+        "mistral",
+        "google_ai_studio",
+        "fireworks"
+      ],
+      "defaultEmbeddingProvider": null,
+      "metadata": null
+    },
+    "created": 1743150122797,
+    "sId": "l3BRVKD6TD",
+    "title": "MCP Chat Session",
+    "visibility": "unlisted",
+    "content": [],
+    "requestedGroupIds": [],
+    "groupIds": []
+  }
+}
+[DEBUG] [2025-03-28T08:22:02.913Z] Adding message to conversation l3BRVKD6TD:
+{
+  "role": "user",
+  "content": "Hello! Please introduce yourself and explain what you can help me with."
+}
+[DEBUG] [2025-03-28T08:22:02.913Z] Sending payload to Dust API:
+{
+  "content": "Hello! Please introduce yourself and explain what you can help me with.",
+  "mentions": [],
+  "context": []
+}
+[ERROR] [2025-03-28T08:22:03.103Z] Error posting message to conversation l3BRVKD6TD:
+AxiosError: Request failed with status code 400
+    at settle (/Users/ma3u/projects/mcp-server-dust-JS/node_modules/axios/dist/node/axios.cjs:2031:12)
+    at IncomingMessage.handleStreamEnd (/Users/ma3u/projects/mcp-server-dust-JS/node_modules/axios/dist/node/axios.cjs:3148:11)
+    at IncomingMessage.emit (node:events:519:35)
+    at endReadableNT (node:internal/streams/readable:1696:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (/Users/ma3u/projects/mcp-server-dust-JS/node_modules/axios/dist/node/axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async addDustMessage (/Users/ma3u/projects/mcp-server-dust-JS/server.js:191:22)
+    at async createDustRun (/Users/ma3u/projects/mcp-server-dust-JS/server.js:235:21)
+    at async /Users/ma3u/projects/mcp-server-dust-JS/server.js:350:50
+[ERROR] [2025-03-28T08:22:03.104Z] Dust API error response:
+{"error":{"type":"invalid_request_error","message":"Validation error: Expected object, received array at \"context\""}}
+[ERROR] [2025-03-28T08:22:03.104Z] Error in chat request:
+Error: Failed to post message: Request failed with status code 400
+    at addDustMessage (/Users/ma3u/projects/mcp-server-dust-JS/server.js:203:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async createDustRun (/Users/ma3u/projects/mcp-server-dust-JS/server.js:235:21)
+    at async /Users/ma3u/projects/mcp-server-dust-JS/server.js:350:50
+[DEBUG] [2025-03-28T08:22:03.104Z] Sending SSE event:
+{
+  "jsonrpc": "2.0",
+  "method": "chat",
+  "params": {
+    "type": "error",
+    "error": "Error: Failed to post message: Request failed with status code 400"
+  }
+}
+[INFO] [2025-03-28T08:29:26.050Z] Starting MCP Server with Dust integration
+[INFO] [2025-03-28T08:29:26.052Z] MCP Server Configuration:
+[INFO] [2025-03-28T08:29:26.052Z] - MCP Name: Dust MCP Server JS
+[INFO] [2025-03-28T08:29:26.052Z] - MCP Host: 127.0.0.1
+[INFO] [2025-03-28T08:29:26.052Z] - MCP Port: 5001
+[INFO] [2025-03-28T08:29:26.052Z] 
+Dust Configuration:
+[INFO] [2025-03-28T08:29:26.052Z] - API Key (masked): ****8abb
+[INFO] [2025-03-28T08:29:26.052Z] - Workspace ID: 11453f1c9e
+[INFO] [2025-03-28T08:29:26.052Z] - Agent ID: 442875
+[INFO] [2025-03-28T08:29:26.052Z] - Agent Name: SystemsThinking
+[INFO] [2025-03-28T08:29:26.052Z] - Base URL: https://dust.tt
+[INFO] [2025-03-28T08:29:59.331Z] Received RPC request: getModels
+[DEBUG] [2025-03-28T08:29:59.332Z] Request params:
+{}
+[INFO] [2025-03-28T08:29:59.335Z] ========== RECEIVED SSE REQUEST ==========
+[DEBUG] [2025-03-28T08:29:59.335Z] Request query:
+{
+  "method": "chat",
+  "params": "{\"messages\":[{\"role\":\"user\",\"content\":\"Hello! Please introduce yourself and explain what you can help me with.\"}],\"model\":\"442875\"}"
+}
+[INFO] [2025-03-28T08:29:59.335Z] Parsed method: chat
+[DEBUG] [2025-03-28T08:29:59.335Z] Parsed params:
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Hello! Please introduce yourself and explain what you can help me with."
+    }
+  ],
+  "model": "442875"
+}
+[INFO] [2025-03-28T08:29:59.335Z] Chat request with 1 messages
+[INFO] [2025-03-28T08:29:59.336Z] Creating new Dust conversation
+[DEBUG] [2025-03-28T08:29:59.564Z] Conversation created
+{
+  "conversation": {
+    "id": 4282482,
+    "owner": {
+      "id": 42808,
+      "sId": "11453f1c9e",
+      "name": "WorkwithAI_Launchpad",
+      "role": "builder",
+      "segmentation": null,
+      "ssoEnforced": false,
+      "whiteListedProviders": [
+        "openai",
+        "anthropic",
+        "mistral",
+        "google_ai_studio",
+        "fireworks"
+      ],
+      "defaultEmbeddingProvider": null,
+      "metadata": null
+    },
+    "created": 1743150599509,
+    "sId": "NIsYDmD9MO",
+    "title": "MCP Chat Session",
+    "visibility": "unlisted",
+    "content": [],
+    "requestedGroupIds": [],
+    "groupIds": []
+  }
+}
+[DEBUG] [2025-03-28T08:29:59.564Z] Adding message to conversation NIsYDmD9MO:
+{
+  "role": "user",
+  "content": "Hello! Please introduce yourself and explain what you can help me with."
+}
+[DEBUG] [2025-03-28T08:29:59.565Z] Sending payload to Dust API:
+{
+  "content": "Hello! Please introduce yourself and explain what you can help me with.",
+  "mentions": [],
+  "context": {}
+}
+[ERROR] [2025-03-28T08:29:59.938Z] Error posting message to conversation NIsYDmD9MO:
+AxiosError: Request failed with status code 400
+    at settle (/Users/ma3u/projects/mcp-server-dust-JS/node_modules/axios/dist/node/axios.cjs:2031:12)
+    at IncomingMessage.handleStreamEnd (/Users/ma3u/projects/mcp-server-dust-JS/node_modules/axios/dist/node/axios.cjs:3148:11)
+    at IncomingMessage.emit (node:events:519:35)
+    at endReadableNT (node:internal/streams/readable:1696:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (/Users/ma3u/projects/mcp-server-dust-JS/node_modules/axios/dist/node/axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async addDustMessage (/Users/ma3u/projects/mcp-server-dust-JS/server.js:191:22)
+    at async createDustRun (/Users/ma3u/projects/mcp-server-dust-JS/server.js:235:21)
+    at async /Users/ma3u/projects/mcp-server-dust-JS/server.js:350:50
+[ERROR] [2025-03-28T08:29:59.938Z] Dust API error response:
+{"error":{"type":"invalid_request_error","message":"Validation error: Required at \"context.username\"; Required at \"context.timezone\""}}
+[ERROR] [2025-03-28T08:29:59.938Z] Error in chat request:
+Error: Failed to post message: Request failed with status code 400
+    at addDustMessage (/Users/ma3u/projects/mcp-server-dust-JS/server.js:203:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async createDustRun (/Users/ma3u/projects/mcp-server-dust-JS/server.js:235:21)
+    at async /Users/ma3u/projects/mcp-server-dust-JS/server.js:350:50
+[DEBUG] [2025-03-28T08:29:59.938Z] Sending SSE event:
+{
+  "jsonrpc": "2.0",
+  "method": "chat",
+  "params": {
+    "type": "error",
+    "error": "Error: Failed to post message: Request failed with status code 400"
+  }
+}
+[INFO] [2025-03-28T08:33:08.964Z] Starting MCP Server with Dust integration
+[INFO] [2025-03-28T08:33:08.965Z] MCP Server Configuration:
+[INFO] [2025-03-28T08:33:08.965Z] - MCP Name: Dust MCP Server JS
+[INFO] [2025-03-28T08:33:08.965Z] - MCP Host: 127.0.0.1
+[INFO] [2025-03-28T08:33:08.965Z] - MCP Port: 5001
+[INFO] [2025-03-28T08:33:08.965Z] 
+Dust Configuration:
+[INFO] [2025-03-28T08:33:08.965Z] - API Key (masked): ****8abb
+[INFO] [2025-03-28T08:33:08.966Z] - Workspace ID: 11453f1c9e
+[INFO] [2025-03-28T08:33:08.966Z] - Agent ID: 442875
+[INFO] [2025-03-28T08:33:08.966Z] - Agent Name: SystemsThinking
+[INFO] [2025-03-28T08:33:08.966Z] - Base URL: https://dust.tt
+[INFO] [2025-03-28T08:33:22.395Z] Received RPC request: getModels
+[DEBUG] [2025-03-28T08:33:22.395Z] Request params:
+{}
+[INFO] [2025-03-28T08:33:22.398Z] ========== RECEIVED SSE REQUEST ==========
+[DEBUG] [2025-03-28T08:33:22.398Z] Request query:
+{
+  "method": "chat",
+  "params": "{\"messages\":[{\"role\":\"user\",\"content\":\"Hello! Please introduce yourself and explain what you can help me with.\"}],\"model\":\"442875\"}"
+}
+[INFO] [2025-03-28T08:33:22.398Z] Parsed method: chat
+[DEBUG] [2025-03-28T08:33:22.398Z] Parsed params:
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Hello! Please introduce yourself and explain what you can help me with."
+    }
+  ],
+  "model": "442875"
+}
+[INFO] [2025-03-28T08:33:22.398Z] Chat request with 1 messages
+[INFO] [2025-03-28T08:33:22.398Z] Creating new Dust conversation
+[DEBUG] [2025-03-28T08:33:22.897Z] Conversation created
+{
+  "conversation": {
+    "id": 4282532,
+    "owner": {
+      "id": 42808,
+      "sId": "11453f1c9e",
+      "name": "WorkwithAI_Launchpad",
+      "role": "builder",
+      "segmentation": null,
+      "ssoEnforced": false,
+      "whiteListedProviders": [
+        "openai",
+        "anthropic",
+        "mistral",
+        "google_ai_studio",
+        "fireworks"
+      ],
+      "defaultEmbeddingProvider": null,
+      "metadata": null
+    },
+    "created": 1743150802806,
+    "sId": "4xXwjSFsqw",
+    "title": "MCP Chat Session",
+    "visibility": "unlisted",
+    "content": [],
+    "requestedGroupIds": [],
+    "groupIds": []
+  }
+}
+[DEBUG] [2025-03-28T08:33:22.897Z] Adding message to conversation 4xXwjSFsqw:
+{
+  "role": "user",
+  "content": "Hello! Please introduce yourself and explain what you can help me with."
+}
+[DEBUG] [2025-03-28T08:33:22.897Z] Sending payload to Dust API: {"content":"Hello! Please introduce yourself and explain what you can help me with.","mentions":[],"context":{}}
+[ERROR] [2025-03-28T08:33:23.077Z] Error posting message to conversation 4xXwjSFsqw:
+AxiosError: Request failed with status code 400
+    at settle (/Users/ma3u/projects/mcp-server-dust-JS/node_modules/axios/dist/node/axios.cjs:2031:12)
+    at IncomingMessage.handleStreamEnd (/Users/ma3u/projects/mcp-server-dust-JS/node_modules/axios/dist/node/axios.cjs:3148:11)
+    at IncomingMessage.emit (node:events:519:35)
+    at endReadableNT (node:internal/streams/readable:1696:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (/Users/ma3u/projects/mcp-server-dust-JS/node_modules/axios/dist/node/axios.cjs:4258:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async addDustMessage (/Users/ma3u/projects/mcp-server-dust-JS/server.js:173:22)
+    at async createDustRun (/Users/ma3u/projects/mcp-server-dust-JS/server.js:217:21)
+    at async /Users/ma3u/projects/mcp-server-dust-JS/server.js:332:50
+[ERROR] [2025-03-28T08:33:23.077Z] Dust API error response:
+{"error":{"type":"invalid_request_error","message":"Validation error: Required at \"context.username\"; Required at \"context.timezone\""}}
+[ERROR] [2025-03-28T08:33:23.078Z] Error in chat request:
+Error: Failed to post message: Request failed with status code 400
+    at addDustMessage (/Users/ma3u/projects/mcp-server-dust-JS/server.js:185:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async createDustRun (/Users/ma3u/projects/mcp-server-dust-JS/server.js:217:21)
+    at async /Users/ma3u/projects/mcp-server-dust-JS/server.js:332:50
+[DEBUG] [2025-03-28T08:33:23.078Z] Sending SSE event:
+{
+  "jsonrpc": "2.0",
+  "method": "chat",
+  "params": {
+    "type": "error",
+    "error": "Error: Failed to post message: Request failed with status code 400"
+  }
+}
+[INFO] [2025-03-28T08:34:14.617Z] Starting MCP Server with Dust integration
+[INFO] [2025-03-28T08:34:14.618Z] MCP Server Configuration:
+[INFO] [2025-03-28T08:34:14.619Z] - MCP Name: Dust MCP Server JS
+[INFO] [2025-03-28T08:34:14.619Z] - MCP Host: 127.0.0.1
+[INFO] [2025-03-28T08:34:14.619Z] - MCP Port: 5001
+[INFO] [2025-03-28T08:34:14.619Z] 
+Dust Configuration:
+[INFO] [2025-03-28T08:34:14.619Z] - API Key (masked): ****8abb
+[INFO] [2025-03-28T08:34:14.619Z] - Workspace ID: 11453f1c9e
+[INFO] [2025-03-28T08:34:14.619Z] - Agent ID: 442875
+[INFO] [2025-03-28T08:34:14.620Z] - Agent Name: SystemsThinking
+[INFO] [2025-03-28T08:34:14.620Z] - Base URL: https://dust.tt
+[INFO] [2025-03-28T08:34:24.605Z] Received RPC request: getModels
+[DEBUG] [2025-03-28T08:34:24.605Z] Request params:
+{}
+[INFO] [2025-03-28T08:34:24.608Z] ========== RECEIVED SSE REQUEST ==========
+[DEBUG] [2025-03-28T08:34:24.608Z] Request query:
+{
+  "method": "chat",
+  "params": "{\"messages\":[{\"role\":\"user\",\"content\":\"Hello! Please introduce yourself and explain what you can help me with.\"}],\"model\":\"442875\"}"
+}
+[INFO] [2025-03-28T08:34:24.608Z] Parsed method: chat
+[DEBUG] [2025-03-28T08:34:24.609Z] Parsed params:
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Hello! Please introduce yourself and explain what you can help me with."
+    }
+  ],
+  "model": "442875"
+}
+[INFO] [2025-03-28T08:34:24.609Z] Chat request with 1 messages
+[INFO] [2025-03-28T08:34:24.609Z] Creating new Dust conversation
+[DEBUG] [2025-03-28T08:34:24.826Z] Conversation created
+{
+  "conversation": {
+    "id": 4282547,
+    "owner": {
+      "id": 42808,
+      "sId": "11453f1c9e",
+      "name": "WorkwithAI_Launchpad",
+      "role": "builder",
+      "segmentation": null,
+      "ssoEnforced": false,
+      "whiteListedProviders": [
+        "openai",
+        "anthropic",
+        "mistral",
+        "google_ai_studio",
+        "fireworks"
+      ],
+      "defaultEmbeddingProvider": null,
+      "metadata": null
+    },
+    "created": 1743150864760,
+    "sId": "8c89hHRbtl",
+    "title": "MCP Chat Session",
+    "visibility": "unlisted",
+    "content": [],
+    "requestedGroupIds": [],
+    "groupIds": []
+  }
+}
+[DEBUG] [2025-03-28T08:34:24.826Z] Adding message to conversation 8c89hHRbtl:
+{
+  "role": "user",
+  "content": "Hello! Please introduce yourself and explain what you can help me with."
+}
+[DEBUG] [2025-03-28T08:34:24.826Z] Sending payload to Dust API: {"content":"Hello! Please introduce yourself and explain what you can help me with.","mentions":[],"context":{"username":"systems_analyst","timezone":"Europe/Berlin"}}
+[DEBUG] [2025-03-28T08:34:25.077Z] Message added successfully
+[ERROR] [2025-03-28T08:34:25.221Z] Error in chat request:
+Error: Failed to create run: Request failed with status code 404
+    at createDustRun (/Users/ma3u/projects/mcp-server-dust-JS/server.js:243:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /Users/ma3u/projects/mcp-server-dust-JS/server.js:335:50
+[DEBUG] [2025-03-28T08:34:25.221Z] Sending SSE event:
+{
+  "jsonrpc": "2.0",
+  "method": "chat",
+  "params": {
+    "type": "error",
+    "error": "Error: Failed to create run: Request failed with status code 404"
+  }
+}
+[INFO] [2025-03-28T08:35:42.437Z] Starting MCP Server with Dust integration
+[INFO] [2025-03-28T08:35:42.438Z] MCP Server Configuration:
+[INFO] [2025-03-28T08:35:42.438Z] - MCP Name: Dust MCP Server JS
+[INFO] [2025-03-28T08:35:42.438Z] - MCP Host: 127.0.0.1
+[INFO] [2025-03-28T08:35:42.438Z] - MCP Port: 5001
+[INFO] [2025-03-28T08:35:42.439Z] 
+Dust Configuration:
+[INFO] [2025-03-28T08:35:42.439Z] - API Key (masked): ****8abb
+[INFO] [2025-03-28T08:35:42.439Z] - Workspace ID: 11453f1c9e
+[INFO] [2025-03-28T08:35:42.439Z] - Agent ID: 442875
+[INFO] [2025-03-28T08:35:42.439Z] - Agent Name: SystemsThinking
+[INFO] [2025-03-28T08:35:42.439Z] - Base URL: https://dust.tt
+[INFO] [2025-03-28T08:35:49.024Z] Received RPC request: getModels
+[DEBUG] [2025-03-28T08:35:49.025Z] Request params:
+{}
+[INFO] [2025-03-28T08:35:49.028Z] ========== RECEIVED SSE REQUEST ==========
+[DEBUG] [2025-03-28T08:35:49.029Z] Request query:
+{
+  "method": "chat",
+  "params": "{\"messages\":[{\"role\":\"user\",\"content\":\"Hello! Please introduce yourself and explain what you can help me with.\"}],\"model\":\"442875\"}"
+}
+[INFO] [2025-03-28T08:35:49.029Z] Parsed method: chat
+[DEBUG] [2025-03-28T08:35:49.029Z] Parsed params:
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Hello! Please introduce yourself and explain what you can help me with."
+    }
+  ],
+  "model": "442875"
+}
+[INFO] [2025-03-28T08:35:49.029Z] Chat request with 1 messages
+[INFO] [2025-03-28T08:35:49.029Z] Creating new Dust conversation
+[DEBUG] [2025-03-28T08:35:49.302Z] Conversation created
+{
+  "conversation": {
+    "id": 4282569,
+    "owner": {
+      "id": 42808,
+      "sId": "11453f1c9e",
+      "name": "WorkwithAI_Launchpad",
+      "role": "builder",
+      "segmentation": null,
+      "ssoEnforced": false,
+      "whiteListedProviders": [
+        "openai",
+        "anthropic",
+        "mistral",
+        "google_ai_studio",
+        "fireworks"
+      ],
+      "defaultEmbeddingProvider": null,
+      "metadata": null
+    },
+    "created": 1743150949239,
+    "sId": "Ytf4K2TdMY",
+    "title": "MCP Chat Session",
+    "visibility": "unlisted",
+    "content": [],
+    "requestedGroupIds": [],
+    "groupIds": []
+  }
+}
+[DEBUG] [2025-03-28T08:35:49.302Z] Adding message to conversation Ytf4K2TdMY:
+{
+  "role": "user",
+  "content": "Hello! Please introduce yourself and explain what you can help me with."
+}
+[DEBUG] [2025-03-28T08:35:49.303Z] Sending payload to Dust API: {"content":"Hello! Please introduce yourself and explain what you can help me with.","mentions":[],"context":{"username":"systems_analyst","timezone":"Europe/Berlin"}}
+[DEBUG] [2025-03-28T08:35:49.519Z] Message added successfully
+[ERROR] [2025-03-28T08:35:49.656Z] Error in chat request:
+Error: Failed to create run: Request failed with status code 404
+    at createDustRun (/Users/ma3u/projects/mcp-server-dust-JS/server.js:245:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /Users/ma3u/projects/mcp-server-dust-JS/server.js:337:50
+[DEBUG] [2025-03-28T08:35:49.656Z] Sending SSE event:
+{
+  "jsonrpc": "2.0",
+  "method": "chat",
+  "params": {
+    "type": "error",
+    "error": "Error: Failed to create run: Request failed with status code 404"
+  }
+}
+[INFO] [2025-03-28T08:37:20.692Z] Starting MCP Server with Dust integration
+[INFO] [2025-03-28T08:37:20.693Z] MCP Server Configuration:
+[INFO] [2025-03-28T08:37:20.693Z] - MCP Name: Dust MCP Server JS
+[INFO] [2025-03-28T08:37:20.693Z] - MCP Host: 127.0.0.1
+[INFO] [2025-03-28T08:37:20.693Z] - MCP Port: 5001
+[INFO] [2025-03-28T08:37:20.693Z] 
+Dust Configuration:
+[INFO] [2025-03-28T08:37:20.693Z] - API Key (masked): ****8abb
+[INFO] [2025-03-28T08:37:20.693Z] - Workspace ID: 11453f1c9e
+[INFO] [2025-03-28T08:37:20.693Z] - Agent ID: 442875
+[INFO] [2025-03-28T08:37:20.694Z] - Agent Name: SystemsThinking
+[INFO] [2025-03-28T08:37:20.694Z] - Base URL: https://dust.tt
+[INFO] [2025-03-28T08:37:25.960Z] Received RPC request: getModels
+[DEBUG] [2025-03-28T08:37:25.960Z] Request params:
+{}
+[INFO] [2025-03-28T08:37:25.964Z] ========== RECEIVED SSE REQUEST ==========
+[DEBUG] [2025-03-28T08:37:25.964Z] Request query:
+{
+  "method": "chat",
+  "params": "{\"messages\":[{\"role\":\"user\",\"content\":\"Hello! Please introduce yourself and explain what you can help me with.\"}],\"model\":\"442875\"}"
+}
+[INFO] [2025-03-28T08:37:25.964Z] Parsed method: chat
+[DEBUG] [2025-03-28T08:37:25.964Z] Parsed params:
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Hello! Please introduce yourself and explain what you can help me with."
+    }
+  ],
+  "model": "442875"
+}
+[INFO] [2025-03-28T08:37:25.964Z] Chat request with 1 messages
+[INFO] [2025-03-28T08:37:25.964Z] Creating new Dust conversation
+[DEBUG] [2025-03-28T08:37:26.170Z] Conversation created
+{
+  "conversation": {
+    "id": 4282594,
+    "owner": {
+      "id": 42808,
+      "sId": "11453f1c9e",
+      "name": "WorkwithAI_Launchpad",
+      "role": "builder",
+      "segmentation": null,
+      "ssoEnforced": false,
+      "whiteListedProviders": [
+        "openai",
+        "anthropic",
+        "mistral",
+        "google_ai_studio",
+        "fireworks"
+      ],
+      "defaultEmbeddingProvider": null,
+      "metadata": null
+    },
+    "created": 1743151046053,
+    "sId": "a4Wr07oCbN",
+    "title": "MCP Chat Session",
+    "visibility": "unlisted",
+    "content": [],
+    "requestedGroupIds": [],
+    "groupIds": []
+  }
+}
+[DEBUG] [2025-03-28T08:37:26.170Z] Adding message to conversation a4Wr07oCbN:
+{
+  "role": "user",
+  "content": "Hello! Please introduce yourself and explain what you can help me with."
+}
+[DEBUG] [2025-03-28T08:37:26.170Z] Sending payload to Dust API: {"content":"Hello! Please introduce yourself and explain what you can help me with.","mentions":[],"context":{"username":"systems_analyst","timezone":"Europe/Berlin"}}
+[DEBUG] [2025-03-28T08:37:26.380Z] Message added successfully
+[ERROR] [2025-03-28T08:37:26.522Z] Error in chat request:
+Error: Failed to create run: Request failed with status code 404
+    at createDustRun (/Users/ma3u/projects/mcp-server-dust-JS/server.js:245:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /Users/ma3u/projects/mcp-server-dust-JS/server.js:337:50
+[DEBUG] [2025-03-28T08:37:26.522Z] Sending SSE event:
+{
+  "jsonrpc": "2.0",
+  "method": "chat",
+  "params": {
+    "type": "error",
+    "error": "Error: Failed to create run: Request failed with status code 404"
+  }
+}
