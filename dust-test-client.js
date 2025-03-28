@@ -1,7 +1,7 @@
 /**
  * Dust.tt API Client Test
- * This script demonstrates connecting to the Dust API using the @dust-tt/client package
- * Based on the official SDK example from the NPM package documentation
+ * This script implements the streaming solution exactly as shown in the official SDK documentation
+ * Source: https://www.npmjs.com/package/@dust-tt/client
  */
 
 const { DustAPI } = require('@dust-tt/client');
@@ -11,104 +11,91 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 async function main() {
-  // Configuration from environment variables
+  // Configuration from environment variables only - no hardcoded secrets
   const config = {
-    workspaceId: process.env.DUST_WORKSPACE_ID || '11453f1c9e',
-    apiKey: process.env.DUST_API_KEY || 'sk-32482554ff5109791773970d8db38abb',
+    workspaceId: process.env.DUST_WORKSPACE_ID,
+    apiKey: process.env.DUST_API_KEY,
     baseUrl: process.env.DUST_DOMAIN || 'https://dust.tt',
-    agentId: process.env.DUST_AGENT_ID || '442875',
-    username: process.env.DUST_USERNAME || 'systems_analyst',
-    fullName: process.env.DUST_FULLNAME || 'Ma Bu',
-    timezone: process.env.DUST_TIMEZONE || 'Europe/Berlin'
+    agentId: process.env.DUST_AGENT_ID,
+    username: process.env.DUST_USERNAME || 'user',
+    fullName: process.env.DUST_FULLNAME || 'Dust API User',
+    timezone: process.env.DUST_TIMEZONE || 'UTC'
   };
+  
+  // Verify required environment variables are set
+  if (!config.workspaceId || !config.apiKey || !config.agentId) {
+    throw new Error('Missing required environment variables. Please set DUST_WORKSPACE_ID, DUST_API_KEY, and DUST_AGENT_ID');
+  }
 
   console.log('=========================================');
-  console.log('Dust.tt API SDK Example');
+  console.log('Dust.tt API SDK Example - Official Documentation Implementation');
   console.log('=========================================');
   console.log(`Workspace ID: ${config.workspaceId}`);
   console.log(`Agent ID: ${config.agentId}`);
   console.log(`Base URL: ${config.baseUrl}`);
   console.log('=========================================');
 
-  // Initialize the client
-  console.log('\nInitializing Dust API client...');
-  const dustApi = new DustAPI(
-    { url: config.baseUrl },
-    { workspaceId: config.workspaceId, apiKey: config.apiKey },
-    console
-  );
-  
   try {
-    // Get available agents
-    console.log('\nFetching available agents...');
-    const agentsResult = await dustApi.getAgentConfigurations({});
-
-    if (agentsResult.isErr()) {
-      throw new Error(`Failed to get agents: ${agentsResult.error.message}`);
-    }
+    console.log('\nFollowing the exact SDK documentation approach');
+    console.log('Source: https://www.npmjs.com/package/@dust-tt/client');
     
-    const agents = agentsResult.value.filter((agent) => agent.status === "active");
-    console.log(`Found ${agents.length} active agents:`);
-    agents.forEach((agent, index) => {
-      console.log(`${index + 1}. ${agent.name} (ID: ${agent.id})`);
-      if (String(agent.id) === String(config.agentId)) {
-        console.log(`   -> This is our target agent`);
-      }
-    });
+    // Initialize the Dust API client
+    const dustApi = new DustAPI(
+      { url: config.baseUrl },
+      { workspaceId: config.workspaceId, apiKey: config.apiKey },
+      console
+    );
     
-    // Check if our target agent exists
-    const targetAgent = agents.find(agent => String(agent.id) === String(config.agentId));
-    if (!targetAgent) {
-      throw new Error(`Agent with ID ${config.agentId} not found!`);
-    }
-    
-    // Set up context for the conversation
+    // Following the example from the documentation
+    // Setup context for user information
     const context = {
       timezone: config.timezone,
       username: config.username,
       fullName: config.fullName
     };
-
-    // The message to send to the agent
-    const question = "Hello! Please introduce yourself and explain what you can help me with.";
-    console.log(`\nCreating conversation with initial message: "${question}"`);
-
-    // Create a conversation with an initial message that mentions our agent
-    const conversationResult = await dustApi.createConversation({
-      title: "API Test Conversation",
+    
+    console.log('\nCreating conversation with initial message...');
+    
+    // Start a new conversation with a message mentioning the agent
+    const conversationRes = await dustApi.createConversation({
+      title: "Documentation Example Conversation",
       message: {
-        content: question,
-        mentions: [
-          {
-            configurationId: config.agentId,
-          },
-        ],
-        context,
+        content: "Hello! What can you help me with?",
+        mentions: [{ configurationId: config.agentId }],
+        context: context,
       },
     });
-
-    if (conversationResult.isErr()) {
-      throw new Error(`Failed to create conversation: ${conversationResult.error.message}`);
+    
+    if (conversationRes.isErr()) {
+      throw new Error(`Failed to create conversation: ${conversationRes.error.message}`);
     }
-
-    const { conversation, message } = conversationResult.value;
+    
+    const { conversation, message } = conversationRes.value;
+    
     console.log(`Conversation created with ID: ${conversation.sId}`);
     console.log(`Message sent with ID: ${message.sId}`);
 
-    // Set up abort controller for stream cancellation (optional)
-    const abortController = new AbortController();
-    const signal = abortController.signal;
-
-    // After 60 seconds, abort the stream if it's still running
+    // For handling stream cancellation
+    const controller = new AbortController();
+    const signal = controller.signal;
+    
+    // Set a timeout for stream cancellation
     const timeout = setTimeout(() => {
-      console.log('\nStream timeout reached, aborting...');
-      abortController.abort();
+      console.log('Stream timeout reached, aborting...');
+      controller.abort();
     }, 60000);
-
-    console.log('\nStarting event stream to receive agent response...');
-
+    
+    // Now using the exact streaming implementation from the SDK documentation
+    console.log('\nFollowing the SDK documentation for streaming...');
+    
     try {
-      // Stream the agent's answer events
+      // Wait a moment for the agent message to be created
+      // This is not in the documentation but necessary due to timing issues
+      console.log('Waiting 15s for the agent to start processing...');
+      await new Promise(resolve => setTimeout(resolve, 15000));
+      
+      // Stream the agent's answer
+      console.log('\nStarting event stream to receive agent response...');
       const streamResult = await dustApi.streamAgentAnswerEvents({
         conversation,
         userMessageId: message.sId,
